@@ -119,14 +119,14 @@ gulp.task('imagemin-icons', function() {
 /**
  * 版本号添加
  */
-gulp.task('rev', ['clean'], function () {
+gulp.task('rev', function () {
 	return gulp.src(['src/js/*.js', 'src/css/*.css', 'src/image/*.css', 'src/image/*.png', 'src/*.html'], {base: 'src'})
 	 	.pipe(rev())
 	 	.pipe(gulp.dest('release'))
 		.pipe(rev.manifest())
 		.pipe(gulp.dest('release'));
 });
-gulp.task('rev-html', ['rev'], function () {
+gulp.task('rev-html', function () {
 	gulp.src(['release/*.json', 'release/*.html'])
         .pipe( revCollector({
             replaceReved: true,
@@ -144,7 +144,7 @@ gulp.task('clean', function() {
 /**
  * 预发布目录
  */
-gulp.task('release',  function() {
+/*gulp.task('release',  function() {
 	gulp.src('src/css/*.css')
 		.pipe(gulp.dest('release/css'));
 	gulp.src('src/js/*')
@@ -158,8 +158,8 @@ gulp.task('release',  function() {
             preserveLineBreaks: true
 		}))
 		.pipe(gulp.dest('release'));
-});
-gulp.task('bulid', gulpSync.sync(['clean', ['js', 'less'], 'rev', 'release']));
+});*/
+gulp.task('build', gulpSync.sync(['clean',['rev'], 'rev-html']));
 /**
  * 监控样式
  */
